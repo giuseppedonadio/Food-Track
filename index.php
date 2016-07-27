@@ -69,7 +69,6 @@ function showPizzas()
 	get_header();
 	global $pizzas;
 	//dumpDie($_POST);
-	global $pizzas;
 	echo '<h3>Pizzas</h3>';
 	echo '<form action="' . THIS_PAGE . '" method="post" onsubmit="return checkForm(this);">';
 	foreach ($pizzas as $pizza) {
@@ -109,64 +108,4 @@ function showSelection()
 
 	get_footer();
 }
-/*
-function showForm()
-{# shows form so user can enter their name.  Initial scenario
-	get_header(); #defaults to header_inc.php
-
-	echo
-	'<script type="text/javascript" src="' . VIRTUAL_PATH . 'include/util.js"></script>
-	<script type="text/javascript">
-		function checkForm(thisForm)
-		{//check form data for valid info
-			if(empty(thisForm.YourName,"Please Enter Your Name")){return false;}
-			return true;//if all is passed, submit!
-		}
-	</script>
-	<h3 align="center">' . smartTitle() . '</h3>
-	<p align="center">Please enter your name</p>
-	<form action="' . THIS_PAGE . '" method="post" onsubmit="return checkForm(this);">
-		<table align="center">
-			<tr>
-				<td align="right">
-					Name
-				</td>
-				<td>
-					<input type="text" name="YourName" /><font color="red"><b>*</b></font> <em>(alphabetic only)</em>
-				</td>
-			</tr>
-			<tr>
-				<td align="center" colspan="2">
-					<input type="submit" value="Please Enter Your Name"><em>(<font color="red"><b>*</b> required field</font>)</em>
-				</td>
-			</tr>
-		</table>
-		<input type="hidden" name="act" value="display" />
-	</form>
-	';
-	get_footer(); #defaults to footer_inc.php
-}
-
-function showName()
-{#form submits here we show entered name
-	get_header(); #defaults to footer_inc.php
-	if(!isset($_POST['YourName']) || $_POST['YourName'] == '')
-	{//data must be sent
-		feedback("No form data submitted"); #will feedback to submitting page via session variable
-		myRedirect(THIS_PAGE);
-	}
-
-	if(!ctype_alnum($_POST['YourName']))
-	{//data must be alphanumeric only
-		feedback("Only letters and numbers are allowed.  Please re-enter your name."); #will feedback to submitting page via session variable
-		myRedirect(THIS_PAGE);
-	}
-
-	$myName = strip_tags($_POST['YourName']);# here's where we can strip out unwanted data
-
-	echo '<h3 align="center">' . smartTitle() . '</h3>';
-	echo '<p align="center">Your name is <b>' . $myName . '</b>!</p>';
-	echo '<p align="center"><a href="' . THIS_PAGE . '">RESET</a></p>';
-	get_footer(); #defaults to footer_inc.php
-*/
 ?>
