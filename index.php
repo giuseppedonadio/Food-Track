@@ -74,7 +74,7 @@ function showPizzas()
 	echo '<form action="' . THIS_PAGE . '" method="post" onsubmit="return checkForm(this);">';
 	foreach ($pizzas as $pizza) {
 		//dumpDie($pizza);
-		echo '<p><input type="checkbox" name="Pizza" value="' . $pizza->Type . '"/> ' . $pizza->Type . ', Large, $19.99</p>';
+		echo '<p><input type="checkbox" name="' . $pizza->Type . '" value="' . $pizza->Type . '"/> ' . $pizza->Type . ', Large, $19.99</p>';
 	}
 	echo '<input type="submit" value="Select"/>';
 	echo '<input type="hidden" name="act" value="show" />';
@@ -86,18 +86,26 @@ function showPizzas()
 function showSelection()
 {
 	get_header();
-	global $pizzas;
-	if(!isset($_POST['Pizza']) || $_POST['Pizza'] == '')
+
+	if(!isset($_POST))
 	{//data must be sent
 		feedback("No form data submitted"); #will feedback to submitting page via session variable
 		myRedirect(THIS_PAGE);
 	}
-	//dumpDie($_POST);
-	$myName = strip_tags($_POST['Pizza']);# here's where we can strip out unwanted data
 
-	echo '<h3 align="center">Pizza Selected:</h3>';
-	echo '<p align="center"><b>' . $myName . '</b>!</p>';
-	echo '<p align="center"><a href="' . THIS_PAGE . '">RESET</a></p>';
+	//dumpDie($_POST);
+
+	echo '<h2>Pizzas Selected</h2>';
+	echo '<ul>';
+	while ($pizza_name = current($_POST)) {
+	    if ($pizza_name == 'show') {
+				echo "";
+	    }else{
+				echo '<li>'.$pizza_name.'</li>';
+			}
+	    next($_POST);
+	}
+	echo '<ul>';
 
 	get_footer();
 }
