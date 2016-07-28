@@ -20,5 +20,7 @@
   $pizzas[]=new Pizza('Pepperoni','Medium',17.99);
   $pizzas[]=new Pizza('Combination','Small',15.99);
 
+  $toppings[]=new Toppings('Extra Cheese',1.99);
+
 
  ?>

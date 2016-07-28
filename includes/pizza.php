@@ -54,5 +54,45 @@ class Pizza
 
 }//end pizza class
 
+/*
+* Topping class and what it does
+*
+* More stuff about the class
+*
+*<code>
+* $myPizza = new somePizza('Margherita','Large',19.99);
+*</code>
+*
+* @todo none
+*/
+
+class Toppings
+{
+  public $Topping = "";
+  public $TopPrice = 2.50;
+
+/**
+ * Loads topping Data
+ *
+ * More detail about description
+ *
+ * <code>
+ * $myTopping = new someTopping('ExtraCheese',2.50);
+ *</code>
+ *
+ * @param string $Topping The name of the topping
+ * @return float $TopPrice The cost of the topping
+ * @todo none
+ */
+
+  public function __construct($Topping,$TopPrice)
+  {
+    $this->Topping=$Topping;
+    $this->TopPrice=$TopPrice;
+  }//end constructor
+
+
+}//end Toppings class
+
 
  ?>

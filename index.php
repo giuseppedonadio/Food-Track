@@ -64,16 +64,21 @@ function showPizzas()
 {# 1)Ask user to select their pizzas
 	get_header();
 	global $pizzas;
+	global $toppings;
 	//dumpDie($_POST);
 	echo '<h3>Pizzas</h3>';
 	echo '<form action="' . THIS_PAGE . '" method="post" onsubmit="return checkForm(this);">';
 	foreach ($pizzas as $pizza) {
-		echo '<p><input type="checkbox" name="Pizzas[]" value="' . $pizza->Type . '"/> ' . $pizza->Type . ', Large, $19.99</p>';
+		echo '<p><input type="checkbox" name="Pizzas['.$pizza->Price.']" value="' . $pizza->Type . '"/> ' . $pizza->Type . ', ' . $pizza->Size . ', $' . $pizza->Price . '</p>';
+	}
+
+	echo '<h4>Toppings</h4>';
+	foreach ($toppings as $topping) {
+		echo '<p><input type="checkbox" name="Toppings['.$topping->TopPrice.']" value="' . $topping->Topping . '"/> ' . $topping->Topping . ', $' . $topping->TopPrice . '</p>';
 	}
 	echo '<input type="submit" value="Select"/>';
 	echo '<input type="hidden" name="act" value="show" />';
 	echo '</form>';
-
 	get_footer();
 }
 
@@ -87,11 +92,40 @@ function showSelection()
 	}
 	//dumpDie($_POST['Pizzas']);
 	echo '<h2>Pizzas Selected</h2>';
+	$subpizza=0;
 	echo '<ul>';
-	foreach ($_POST['Pizzas'] as $pizza) {
-		echo '<li>' . $pizza . '</li>';
+	//create list of pizza add price to a subtotal for each pizza
+	foreach ($_POST['Pizzas'] as $price => $pizza) {
+		echo '<li>' . $pizza . ', $' . $price . '</li>';
+		$subpizza+= $price;
 	}
 	echo '</ul>';
+	//if toppings selected show toppings
+	$subtoppings=0;
+	if(isset($_POST['Toppings']))
+	{
+		echo '<h2>Toppings</h2>';
+		echo '<ul>';
+		//create list of toppings add price to a subtotal for each topping
+		foreach ($_POST['Toppings'] as $topprice => $topping) {
+			echo '<li>' . $topping . ', $' . $topprice . '</li>';
+			$subtoppings+=$topprice;
+		}
+		echo '</ul>';
+	}else{
+		echo '<h2>No toppings selected</h2>';
+	}
+
+	$subtotal = $subpizza + $subtoppings;
+	$taxes = $subtotal/16;
+	$total = $subtotal + number_format($taxes, 2);
+
+	echo '<h3>Subtotal: $' . $subtotal . '</h3>';
+	echo '<h3>Taxes: $' . number_format($taxes, 2) . '</h3>';
+	echo '<h3>Total: $' . $total . '</h3>';
+
 	get_footer();
 }
+
+
 ?>
