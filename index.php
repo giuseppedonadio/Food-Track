@@ -56,24 +56,19 @@ switch ($myAction)
 	case "show": # 2)Display Pizza Selected!
 	 	showSelection();
 		break;
-//	case "display": # 2)Display user's name!
-//	 	showName();
-// 	break;
-	default: # 1)Ask user to enter their name
-	 	//showForm();
+	default: # 1)Ask user to select their pizzas
 		showPizzas();
 }
-function showPizzas()
-{
 
+function showPizzas()
+{# 1)Ask user to select their pizzas
 	get_header();
 	global $pizzas;
 	//dumpDie($_POST);
 	echo '<h3>Pizzas</h3>';
 	echo '<form action="' . THIS_PAGE . '" method="post" onsubmit="return checkForm(this);">';
 	foreach ($pizzas as $pizza) {
-		//dumpDie($pizza);
-		echo '<p><input type="checkbox" name="' . $pizza->Type . '" value="' . $pizza->Type . '"/> ' . $pizza->Type . ', Large, $19.99</p>';
+		echo '<p><input type="checkbox" name="Pizzas[]" value="' . $pizza->Type . '"/> ' . $pizza->Type . ', Large, $19.99</p>';
 	}
 	echo '<input type="submit" value="Select"/>';
 	echo '<input type="hidden" name="act" value="show" />';
@@ -83,29 +78,20 @@ function showPizzas()
 }
 
 function showSelection()
-{
+{# 2)Display Pizza Selected!
 	get_header();
-
-	if(!isset($_POST))
+	if(!isset($_POST['Pizzas']))
 	{//data must be sent
 		feedback("No form data submitted"); #will feedback to submitting page via session variable
 		myRedirect(THIS_PAGE);
 	}
-
-	//dumpDie($_POST);
-
+	//dumpDie($_POST['Pizzas']);
 	echo '<h2>Pizzas Selected</h2>';
 	echo '<ul>';
-	while ($pizza_name = current($_POST)) {
-	    if ($pizza_name == 'show') {
-				echo "";
-	    }else{
-				echo '<li>'.$pizza_name.'</li>';
-			}
-	    next($_POST);
+	foreach ($_POST['Pizzas'] as $pizza) {
+		echo '<li>' . $pizza . '</li>';
 	}
-	echo '<ul>';
-
+	echo '</ul>';
 	get_footer();
 }
 ?>
